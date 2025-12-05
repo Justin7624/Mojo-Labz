@@ -54,6 +54,17 @@ body.dark{
   color:var(--ink);
 }
 
+/* TOP HERO HEADER IMAGE – make it thinner */
+.hero-img{
+  width:100%;
+  max-width:1200px;
+  max-height:200px;        /* key: limits how tall the banner gets */
+  height:auto;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 16px;      /* small gap before the calculator */
+}
+
 /* Layout */
 .wrap{max-width:1080px;margin:auto;padding:24px}
 header{
@@ -338,7 +349,8 @@ body.dark .hud kbd{
 </head>
 <body>
 
-<img src="Mojo-Header.png" alt="Mojo Labz" style="max-width:100%;height:auto;display:block;margin:0 auto 12px">
+<!-- Thinner hero header -->
+<img src="Mojo-Header.png" alt="Mojo Labz" class="hero-img">
 
 <div class="wrap">
   <header>
