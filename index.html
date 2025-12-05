@@ -11,26 +11,98 @@
 
 <style>
 :root {
-  --bg:#0f0f12;--card:#15161a;--ink:#e7e7ea;--muted:#9aa0ab;
-  --accent:#7c5cff;--accent-2:#25d0a6;--error:#ff6b6b;
+  /* Mojo Labz lab palette – LIGHT */
+  --bg: #f7f4ee;          /* off-white lab paper */
+  --card: #ffffff;        /* clean card surface */
+  --ink: #0b4453;         /* deep teal text */
+  --muted: #6e8694;       /* muted labels/help */
+  --border: #d5dde2;      /* soft grey border */
+  --accent: #1499b5;      /* aqua/teal accent */
+  --accent-2: #26b9c6;    /* lighter aqua accent */
+  --accent-soft: #e3f4f7; /* pale aqua background */
+  --error: #e15b64;       /* softer error red */
 }
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+
 body{
-  margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  background:radial-gradient(1100px 700px at 100% -50%, #1b1c22 30%, #0f0f12 70%),var(--bg);
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:
+    radial-gradient(1200px 800px at 10% -20%, #ffffff 0, #f7f4ee 45%, #f2f5f7 100%),
+    var(--bg);
+  color:var(--ink);
+  transition:background .25s ease,color .25s ease;
+}
+
+/* DARK THEME OVERRIDES – still lab-y, just night mode */
+body.dark{
+  --bg:#05090d;
+  --card:#0f151a;
+  --ink:#e5f2f6;
+  --muted:#8ea1ad;
+  --border:#27323a;
+  --accent:#26b9c6;
+  --accent-2:#6be0e5;
+  --accent-soft:#041016;
+  --error:#ff7b82;
+
+  background:
+    radial-gradient(1100px 700px at 100% -50%, #08151d 25%, #05090d 70%),
+    var(--bg);
   color:var(--ink);
 }
 
 /* Layout */
 .wrap{max-width:1080px;margin:auto;padding:24px}
-header{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:18px}
+header{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px
+}
 .brand{display:flex;gap:12px;align-items:center}
-.logo{width:60px;height:60px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0d0e12;border:1px solid #2a2c33}
+.logo{
+  width:60px;height:60px;border-radius:16px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--accent-soft);
+  border:1px solid var(--border)
+}
 .logo img{width:100%;height:100%;object-fit:contain;display:block}
-h1{font-size:clamp(20px,3vw,30px);margin:0;font-weight:800;letter-spacing:-0.02em}
+h1{
+  font-size:clamp(20px,3vw,30px);
+  margin:0;
+  font-weight:800;
+  letter-spacing:-0.02em;
+  color:var(--ink)
+}
 
-.card{background:linear-gradient(180deg, #1a1b21, #131419);border:1px solid #23242b;box-shadow:0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.03);border-radius:16px;padding:18px}
+/* Theme toggle button */
+.theme-toggle{
+  font-size:13px;
+  padding:8px 14px;
+}
+
+/* Cards / panels */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px 18px 18px;
+  box-shadow:
+    0 18px 45px rgba(7, 44, 60, 0.06),
+    0 0 0 1px rgba(255,255,255,0.6);
+  transition:background .25s ease,border .25s ease,box-shadow .25s ease;
+}
+
+body.dark .card{
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(255,255,255,0.03);
+}
+
 .grid{display:grid;grid-template-columns:1fr;gap:16px}
 @media(min-width:900px){.grid{grid-template-columns:1.1fr .9fr}}
 
@@ -41,53 +113,227 @@ label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
 .field.dose{grid-column: span 8;}
 @media(max-width:900px){.field.dose{grid-column: span 12;}}
 
+/* Inputs */
 .input{
-  width:100%;background:#0d0e12;color:var(--ink);border:1px solid #2a2c33;border-radius:12px;
-  padding:12px 14px;font-size:16px;line-height:1.3;min-height:46px;caret-color:#fff;
-  outline:2px solid transparent;outline-offset:2px;transition:border .15s ease, outline .15s ease;text-align:left
+  width:100%;
+  background:#fdfdfd;
+  color:var(--ink);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px 14px;
+  font-size:16px;
+  line-height:1.3;
+  min-height:46px;
+  caret-color:var(--accent);
+  outline:2px solid transparent;
+  outline-offset:2px;
+  transition:border .15s ease,box-shadow .15s ease,outline .15s ease,background .15s ease;
+  text-align:left
 }
-.input:focus{border-color:#5c6ae6;outline-color:#3d44a3}
+.input:focus{
+  border-color:var(--accent);
+  outline-color:rgba(20,153,181,0.25);
+  box-shadow:0 0 0 1px rgba(20,153,181,0.25);
+}
+body.dark .input{
+  background:#0b1116;
+  border-color:#25323a;
+}
+body.dark .input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(38,185,198,0.35);
+}
+
 .dose-group{display:grid;grid-template-columns:1fr 110px;gap:8px}
 .unit-select{width:110px;min-height:46px;font-size:16px}
 @media(max-width:420px){.dose-group{grid-template-columns:1fr 96px}.unit-select{width:96px}}
 
-input[type="number"]{appearance:textfield;-webkit-appearance:textfield;-webkit-text-fill-color:var(--ink);color:var(--ink);background-color:#0d0e12}
-input[type="number"]::-webkit-outer-spin-button,input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type="number"]{
+  appearance:textfield;
+  -webkit-appearance:textfield;
+  -webkit-text-fill-color:var(--ink);
+  color:var(--ink);
+  background-color:transparent;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 ::placeholder{color:var(--muted);opacity:.8}
 
+/* Buttons / pills */
 .btns{display:flex;flex-wrap:wrap;gap:10px}
-button.pill{background:#0d0e12;border:1px solid #2a2c33;color:var(--ink);padding:10px 14px;border-radius:999px;cursor:pointer;font-weight:600}
-button.pill[aria-pressed="true"],button.pill:hover{border-color:#4d8cff;background:#111424}
+button.pill{
+  background:#f3f7f9;
+  border:1px solid var(--border);
+  color:var(--ink);
+  padding:9px 16px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.01em;
+  transition:background .15s ease,border .15s ease,transform .1s ease,box-shadow .15s ease,color .15s ease;
+}
+button.pill[aria-pressed="true"],button.pill:hover{
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  box-shadow:0 0 0 1px rgba(20,153,181,0.2);
+  transform:translateY(-1px);
+}
+body.dark button.pill{
+  background:#0f171f;
+  border-color:#27323a;
+  color:var(--ink);
+}
+body.dark button.pill[aria-pressed="true"],
+body.dark button.pill:hover{
+  background:#05141a;
+}
+
 .muted{color:var(--muted)}
-.big{font-size:clamp(18px,3vw,24px);font-weight:800}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 12px;}
-.pill.ghost{background:transparent;border-color:#2a2c33;color:var(--muted)}
-.pill.ghost:hover{border-color:#4d8cff;background:#111424;color:var(--ink)}
+.big{font-size:clamp(18px,3vw,24px);font-weight:800;letter-spacing:-0.01em}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin:6px 0 12px;
+}
+.pill.ghost{
+  background:transparent;
+  border-color:var(--border);
+  color:var(--muted)
+}
+.pill.ghost:hover{
+  border-color:var(--accent);
+  background:var(--accent-soft);
+  color:var(--ink)
+}
 
-.syringe{background:#0c0d11;border:1px solid #272930;border-radius:14px;padding:18px}
+/* Syringe visual */
+.syringe{
+  background:var(--accent-soft);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  transition:background .25s ease,border .25s ease;
+}
+body.dark .syringe{
+  background:radial-gradient(circle at 0 0,#102834 0,#051018 45%);
+  border-color:#26333b;
+}
 .syringe h3{margin:0 0 10px 0;font-size:18px}
-.tube{position:relative;height:36px;border-radius:18px;background:linear-gradient(180deg,#11131a,#0b0c10);border:1px solid #2a2c33;box-shadow:inset 0 2px 8px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)}
-.fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg, var(--accent), #5b9dff);border-radius:18px;box-shadow:inset 0 0 12px rgba(255,255,255,.25), 0 0 16px rgba(124,92,255,.45)}
-.cursor{position:absolute;top:-8px;width:2px;background:var(--accent-2);height:52px;border-radius:2px;box-shadow:0 0 0 2px rgba(37,208,166,.15)}
-.ticks{position:relative;display:flex;justify-content:space-between;align-items:flex-start;margin-top:10px;padding:0 2px}
-.tick{position:relative;width:1px;background:#3a3d47}
-.tick.minor{height:10px;opacity:.55}
-.tick.major{height:16px}
-.tick .n{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted)}
 
+.tube{
+  position:relative;
+  height:36px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fdfefe,#e2e7ea);
+  border:1px solid #c8d2da;
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.06),
+    inset 0 1px 0 rgba(255,255,255,.8)
+}
+body.dark .tube{
+  background:linear-gradient(180deg,#151b22,#05070a);
+  border-color:#27333b;
+  box-shadow:
+    inset 0 2px 9px rgba(0,0,0,.9),
+    inset 0 1px 0 rgba(255,255,255,.04);
+}
+.fill{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius:18px;
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,.35),
+    0 0 14px rgba(20,153,181,.45)
+}
+.cursor{
+  position:absolute;top:-8px;width:2px;background:var(--accent-2);
+  height:52px;border-radius:2px;
+  box-shadow:0 0 0 2px rgba(38,185,198,.18)
+}
+.ticks{
+  position:relative;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-top:10px;
+  padding:0 2px
+}
+.tick{position:relative;width:1px;background:#b7c4cd}
+.tick.minor{height:10px;opacity:.6}
+.tick.major{height:16px}
+.tick .n{
+  position:absolute;top:18px;left:50%;
+  transform:translateX(-50%);
+  font-size:11px;color:var(--muted)
+}
+
+body.dark .tick{background:#3a4b56}
+
+/* Result / notes */
 .note{font-size:13px;color:var(--muted)}
-.result{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:26px}
-.chip{background:#0c0d11;border:1px solid #2a2c33;border-radius:12px;padding:10px 12px}
+.result{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:26px
+}
+.chip{
+  background:#ffffff;
+  border:1px solid #cfd8dd;
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow:0 8px 18px rgba(7,44,60,0.04);
+  transition:background .25s ease,border .25s ease,box-shadow .25s ease;
+}
+body.dark .chip{
+  background:#0f151a;
+  border-color:#29353e;
+  box-shadow:0 10px 28px rgba(0,0,0,0.6);
+}
 .chip .k{color:var(--muted);font-size:12px}
-.chip .v{font-weight:800;font-size:18px}
+.chip .v{font-weight:800;font-size:18px;color:var(--ink)}
 .warn{color:var(--error);font-weight:700}
 footer{margin-top:26px;color:var(--muted);font-size:12px}
-a{color:#8fb6ff}
+a{color:var(--accent)}
 
 /* Debug HUD */
-.hud{position:fixed;left:12px;bottom:12px;background:rgba(10,12,16,.85);color:#dbe1ff;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;font-size:12px;line-height:1.5;z-index:9999;display:none}
-.hud kbd{background:#1e2435;border:1px solid #34405c;border-radius:6px;padding:0 6px;margin:0 2px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace;font-size:11px;color:#e6edff}
+.hud{
+  position:fixed;
+  left:12px;bottom:12px;
+  background:rgba(247,244,238,.98);
+  color:var(--ink);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:12px;
+  line-height:1.5;
+  z-index:9999;
+  display:none;
+  box-shadow:0 10px 30px rgba(7,44,60,.12)
+}
+.hud kbd{
+  background:#e3edf3;
+  border:1px solid #c8d5de;
+  border-radius:6px;
+  padding:0 6px;
+  margin:0 2px;
+  font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size:11px;
+  color:#234152
+}
 .hud.show{display:block}
+
+body.dark .hud{
+  background:rgba(7,13,18,.96);
+  border-color:#27333b;
+  color:var(--ink);
+  box-shadow:0 10px 30px rgba(0,0,0,.75);
+}
+body.dark .hud kbd{
+  background:#101923;
+  border-color:#324354;
+  color:#e1edf5;
+}
 </style>
 </head>
 <body>
@@ -100,6 +346,9 @@ a{color:#8fb6ff}
       <div class="logo"><img src="Mojo-Labz.png" alt="Mojo Labz logo"></div>
       <h1>Mojo Labz — Peptide Calculator</h1>
     </div>
+    <button id="themeToggle" class="pill ghost theme-toggle" type="button" aria-pressed="false">
+      Dark mode
+    </button>
   </header>
 
   <div class="grid">
@@ -110,9 +359,16 @@ a{color:#8fb6ff}
         <button id="clearBtn" class="pill ghost" type="button" aria-label="Clear all inputs">Clear all</button>
       </div>
       <div class="row">
-        <div class="field sm"><label for="vialMg">Peptide per vial (mg)</label><input id="vialMg" class="input" type="number" step="0.1" value="5"></div>
-        <div class="field sm"><label for="diluentMl">Diluent added (mL)</label><input id="diluentMl" class="input" type="number" step="0.1" value="1"></div>
-        <div class="field sm"><label for="syrSize">Syringe size (units scale)</label>
+        <div class="field sm">
+          <label for="vialMg">Peptide per vial (mg)</label>
+          <input id="vialMg" class="input" type="number" step="0.1" value="5">
+        </div>
+        <div class="field sm">
+          <label for="diluentMl">Diluent added (mL)</label>
+          <input id="diluentMl" class="input" type="number" step="0.1" value="1">
+        </div>
+        <div class="field sm">
+          <label for="syrSize">Syringe size (units scale)</label>
           <select id="syrSize" class="input">
             <option value="30">30-unit (short)</option>
             <option value="50">50-unit</option>
@@ -146,7 +402,9 @@ a{color:#8fb6ff}
           <button class="pill preset" data-dose="10" data-unit="mg">10 mg</button>
         </div>
       </div>
-      <p class="note" style="margin-top:10px">Assumes a U-100 insulin syringe where <strong>1 unit = 0.01 mL</strong>. Calculations update as you type.</p>
+      <p class="note" style="margin-top:10px">
+        Assumes a U-100 insulin syringe where <strong>1 unit = 0.01 mL</strong>. Calculations update as you type.
+      </p>
     </section>
 
     <!-- Classic visual -->
@@ -162,8 +420,16 @@ a{color:#8fb6ff}
         </div>
         <div class="ticks" id="ticks" aria-hidden="true"></div>
         <div class="result">
-          <div class="chip"><div class="k">Units to pull</div><div class="v" id="unitsOutChip">—</div><div class="k" style="margin-top:4px">≈ <span id="mlOut">—</span></div></div>
-          <div class="chip"><div class="k">Potency</div><div class="v" id="potencyOut">—</div><div class="k"><span id="potencyUnitLabel">mg</span> per unit</div></div>
+          <div class="chip">
+            <div class="k">Units to pull</div>
+            <div class="v" id="unitsOutChip">—</div>
+            <div class="k" style="margin-top:4px">≈ <span id="mlOut">—</span></div>
+          </div>
+          <div class="chip">
+            <div class="k">Potency</div>
+            <div class="v" id="potencyOut">—</div>
+            <div class="k"><span id="potencyUnitLabel">mg</span> per unit</div>
+          </div>
         </div>
         <p id="warn" class="note" style="margin-top:8px"></p>
       </div>
@@ -173,7 +439,8 @@ a{color:#8fb6ff}
 </div>
 
 <div id="hud" class="hud" aria-live="polite">
-  <strong>Debug mode</strong> — Press <kbd>D</kbd> to toggle<br>Syringe ticks will update when you change scale.<br>
+  <strong>Debug mode</strong> — Press <kbd>D</kbd> to toggle<br>
+  Syringe ticks will update when you change scale.<br>
   <span id="hudVals"></span>
 </div>
 
@@ -181,23 +448,94 @@ a{color:#8fb6ff}
 document.addEventListener('DOMContentLoaded', () => {
   const $ = (id)=>document.getElementById(id);
 
-  const inputs = {vialMg:$('vialMg'), diluentMl:$('diluentMl'), syrSize:$('syrSize'), doseVal:$('doseVal'), doseUnit:$('doseUnit')};
-  const outputs = {doseOut:$('doseOut'), doseUnitLabel:$('doseUnitLabel'), unitsOut:$('unitsOut'), unitWord:$('unitWord'),
-                   mlOut:$('mlOut'), potencyOut:$('potencyOut'), potencyUnitLabel:$('potencyUnitLabel'), unitsOutChip:$('unitsOutChip'), warn:$('warn'),
-                   fill:$('fill'), cursor:$('cursor'), ticks:$('ticks')};
-  const presets = {mcg:$('presets-mcg'), mg:$('presets-mg')};
-  const hud = $('hud'), hudVals=$('hudVals'); let debug=false;
+  /* THEME TOGGLE */
+  const bodyEl = document.body;
+  const themeToggle = $('themeToggle');
+
+  function updateThemeToggleLabel(){
+    const dark = bodyEl.classList.contains('dark');
+    if(!themeToggle) return;
+    themeToggle.textContent = dark ? 'Light mode' : 'Dark mode';
+    themeToggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  }
+
+  // Apply initial theme (saved or system preference)
+  try {
+    const saved = localStorage.getItem('mojo-theme');
+    const prefersDark = window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(saved === 'dark' || (!saved && prefersDark)){
+      bodyEl.classList.add('dark');
+    }
+  } catch(e) {
+    // ignore storage errors
+  }
+  updateThemeToggleLabel();
+
+  if(themeToggle){
+    themeToggle.addEventListener('click', () => {
+      bodyEl.classList.toggle('dark');
+      const isDark = bodyEl.classList.contains('dark');
+      try {
+        localStorage.setItem('mojo-theme', isDark ? 'dark' : 'light');
+      } catch(e) {}
+      updateThemeToggleLabel();
+    });
+  }
+
+  /* CALCULATOR LOGIC */
+
+  const inputs = {
+    vialMg:$('vialMg'),
+    diluentMl:$('diluentMl'),
+    syrSize:$('syrSize'),
+    doseVal:$('doseVal'),
+    doseUnit:$('doseUnit')
+  };
+
+  const outputs = {
+    doseOut:$('doseOut'),
+    doseUnitLabel:$('doseUnitLabel'),
+    unitsOut:$('unitsOut'),
+    unitWord:$('unitWord'),
+    mlOut:$('mlOut'),
+    potencyOut:$('potencyOut'),
+    potencyUnitLabel:$('potencyUnitLabel'),
+    unitsOutChip:$('unitsOutChip'),
+    warn:$('warn'),
+    fill:$('fill'),
+    cursor:$('cursor'),
+    ticks:$('ticks')
+  };
+
+  const presets = {
+    mcg:$('presets-mcg'),
+    mg:$('presets-mg')
+  };
+
+  const hud = $('hud'),
+        hudVals = $('hudVals');
+  let debug=false;
 
   const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
-  const fmt=(n,d=2)=>Number.isFinite(n)?n.toFixed(d).replace(/\.0+$/,'').replace(/(\.[1-9]*)0+$/,'$1'):'—';
+  const fmt=(n,d=2)=>Number.isFinite(n)
+    ? n.toFixed(d).replace(/\.0+$/,'').replace(/(\.[1-9]*)0+$/,'$1')
+    : '—';
 
   function buildTicks(){
     outputs.ticks.innerHTML='';
     const max=parseInt(inputs.syrSize.value,10)||30;
-    const minorStep=(max<=30?1:5), majorStep=(max<=30?5:10);
+    const minorStep=(max<=30?1:5),
+          majorStep=(max<=30?5:10);
     for(let i=0;i<=max;i+=minorStep){
-      const t=document.createElement('div'); t.className='tick '+(i%majorStep===0?'major':'minor');
-      if(i%majorStep===0){ const n=document.createElement('div'); n.className='n'; n.textContent=i; t.appendChild(n); }
+      const t=document.createElement('div');
+      t.className='tick '+(i%majorStep===0?'major':'minor');
+      if(i%majorStep===0){
+        const n=document.createElement('div');
+        n.className='n';
+        n.textContent=i;
+        t.appendChild(n);
+      }
       outputs.ticks.appendChild(t);
     }
   }
@@ -209,13 +547,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function recalc(){
-    const mg=parseFloat(inputs.vialMg.value), ml=parseFloat(inputs.diluentMl.value);
+    const mg=parseFloat(inputs.vialMg.value),
+          ml=parseFloat(inputs.diluentMl.value);
     const maxUnits=parseInt(inputs.syrSize.value,10)||30;
+
     const conc=(mg>0&&ml>0)?mg/ml:NaN;
     const mcgPerUnit=Number.isFinite(conc)?conc*10:NaN;
     const mgPerUnit=Number.isFinite(mcgPerUnit)?mcgPerUnit/1000:NaN;
     const desiredMcg=getDoseMcg();
-    const units=Number.isFinite(mcgPerUnit)&&Number.isFinite(desiredMcg)?desiredMcg/mcgPerUnit:NaN;
+    const units=Number.isFinite(mcgPerUnit)&&Number.isFinite(desiredMcg)
+                ? desiredMcg/mcgPerUnit : NaN;
     const mlToPull=Number.isFinite(units)?units*0.01:NaN;
 
     if(inputs.doseUnit.value==='mg'){
@@ -239,23 +580,43 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs.fill.style.width=pct+'%';
     outputs.cursor.style.left=`calc(${pct}% - 1px)`;
 
-    outputs.warn.textContent=''; outputs.warn.classList.remove('warn');
+    outputs.warn.textContent='';
+    outputs.warn.classList.remove('warn');
     if(!Number.isFinite(units)){
       outputs.warn.textContent='Enter positive values for vial mg, diluent mL, and dose.';
     } else if(units>maxUnits){
       outputs.warn.textContent=`⚠️ Dose exceeds the selected syringe scale of ${maxUnits} units.`;
       outputs.warn.classList.add('warn');
     }
+
+    if(debug && hudVals){
+      hudVals.textContent = `Dose (mcg): ${fmt(desiredMcg,2)} | Units: ${fmt(units,3)} | mcg/unit: ${fmt(mcgPerUnit,3)}`;
+    }
   }
 
   function clearAll(){
-    inputs.vialMg.value=''; inputs.diluentMl.value=''; inputs.doseVal.value=''; inputs.doseUnit.value='mg'; inputs.syrSize.value='100';
-    outputs.doseOut.textContent='—'; outputs.doseUnitLabel.textContent='mg';
-    outputs.unitsOut.textContent='—'; outputs.unitWord.textContent='units';
-    outputs.unitsOutChip.textContent='—'; outputs.potencyOut.textContent='—'; outputs.potencyUnitLabel.textContent='mg';
-    outputs.mlOut.textContent='—'; outputs.warn.textContent=''; outputs.warn.classList.remove('warn');
-    outputs.fill.style.width='0%'; outputs.cursor.style.left='-1px';
-    togglePresets(); buildTicks(); recalc();
+    inputs.vialMg.value='';
+    inputs.diluentMl.value='';
+    inputs.doseVal.value='';
+    inputs.doseUnit.value='mg';
+    inputs.syrSize.value='100';
+
+    outputs.doseOut.textContent='—';
+    outputs.doseUnitLabel.textContent='mg';
+    outputs.unitsOut.textContent='—';
+    outputs.unitWord.textContent='units';
+    outputs.unitsOutChip.textContent='—';
+    outputs.potencyOut.textContent='—';
+    outputs.potencyUnitLabel.textContent='mg';
+    outputs.mlOut.textContent='—';
+    outputs.warn.textContent='';
+    outputs.warn.classList.remove('warn');
+    outputs.fill.style.width='0%';
+    outputs.cursor.style.left='-1px';
+
+    togglePresets();
+    buildTicks();
+    recalc();
   }
 
   function wirePresets(row){
@@ -265,7 +626,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.setAttribute('aria-pressed','true');
         inputs.doseUnit.value = btn.dataset.unit;
         inputs.doseVal.value = btn.dataset.dose;
-        togglePresets(); recalc();
+        togglePresets();
+        recalc();
       });
     });
   }
@@ -281,12 +643,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function convertUnit(prev,next){
     const val=parseFloat(inputs.doseVal.value);
     if(!Number.isFinite(val)||prev===next) return;
-    inputs.doseVal.value=(prev==='mcg'&&next==='mg')?val/1000:(prev==='mg'&&next==='mcg')?val*1000:val;
+    if(prev==='mcg'&&next==='mg') inputs.doseVal.value=val/1000;
+    else if(prev==='mg'&&next==='mcg') inputs.doseVal.value=val*1000;
   }
 
   ['input','change'].forEach(evt=>{
     [inputs.vialMg, inputs.diluentMl, inputs.syrSize, inputs.doseVal].forEach(el=>{
-      el.addEventListener(evt,()=>{if(el===inputs.syrSize) buildTicks(); recalc();});
+      el.addEventListener(evt,()=>{
+        if(el===inputs.syrSize) buildTicks();
+        recalc();
+      });
     });
   });
 
@@ -301,13 +667,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   $('clearBtn').addEventListener('click', clearAll);
 
-  wirePresets(presets.mg); wirePresets(presets.mcg);
-  buildTicks(); togglePresets(); recalc();
+  wirePresets(presets.mg);
+  wirePresets(presets.mcg);
+  buildTicks();
+  togglePresets();
+  recalc();
 
   document.addEventListener('keydown', (e)=>{
-    if(e.key.toLowerCase()==='d'){ debug=!debug; hud.classList.toggle('show',debug); hudVals.textContent=`Syringe scale: ${parseInt(inputs.syrSize.value,10)||30} units`; }
+    if(e.key.toLowerCase()==='d'){
+      debug=!debug;
+      hud.classList.toggle('show',debug);
+      if(debug && hudVals){
+        hudVals.textContent=`Syringe scale: ${parseInt(inputs.syrSize.value,10)||30} units`;
+      }
+    }
   });
-
 });
 </script>
 </body>
